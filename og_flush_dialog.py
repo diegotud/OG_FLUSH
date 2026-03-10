@@ -26,8 +26,8 @@ import os
 
 from qgis.PyQt import uic
 from qgis.PyQt import QtWidgets
+from qgis.PyQt.QtCore import QCoreApplication
 
-# This loads your .ui file so that PyQt can populate your plugin with the elements from Qt Designer
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
     os.path.dirname(__file__), 'og_flush_dialog_base.ui'))
 
@@ -36,68 +36,83 @@ class OGFlushPluginDialog(QtWidgets.QDialog, FORM_CLASS):
     def __init__(self, parent=None):
         """Constructor."""
         super(OGFlushPluginDialog, self).__init__(parent)
-        
+
         self.setupUi(self)
-        
+
         self.checkbox_state_changed(self.mixed_cb.isChecked())
         self.mixed_cb.stateChanged.connect(self.checkbox_state_changed)
         self.checkbox_state_changed2(self.gw_cb.isChecked())
         self.gw_cb.stateChanged.connect(self.checkbox_state_changed2)
-        
-        self.mixed_cb.setToolTip('Select here to consider a combined sewer system instead of a separate system')
-        self.buildbox.setToolTip('Load here the layer with buildings in your study area')
-        self.streetbox.setToolTip('Load here the layer with the streets in your study area')
-        self.catchbox.setToolTip('Load here the layer with the study area or urban catchment')
-        self.outletbox.setToolTip('Load here the layer with the outlet for your sewer network')
-        self.dembox.setToolTip('Load here the layer with a digital elevation model')
-        self.pipe_depth.setToolTip('Select the minimum depth for your nodes according to local regulations')
-        self.dist_thresh.setToolTip('Enter here a distance threshold to consider for the generation of subcatchments')
-        self.return_period.setToolTip('Select the return period for sewer network design according to local regulations')
-        self.build_min_sl.setToolTip('Select a minimum slope for buildings for generation of subcatchments')
-        self.build_max_slope.setToolTip('Select a maximum slope for buildings for generation of subcatchments')
-        self.r15_rain.setToolTip('Enter here the relative rain intensity for design of 15 minutes with one year return period')
-        self.st_min_slope.setToolTip('Select a minimum slope for streets for generation of subcatchments')
-        self.st_max_sl.setToolTip('Select a maximum slope for streets for generation of subcatchments')
-        self.tf_min.setToolTip('Enter the minimum flow time for dimensioning with the rationale method')
-        self.gw_cb.setToolTip('Check to consider extraneaous ground water infiltration  (only works with combined systems)')
-        self.consumption_perc.setToolTip('Percentage of extraneous water as a fraction of dry weather flow')
-        self.min_slope_pipe.setToolTip('Select minimum slope for pipes in the network according to local regulations')
-        self.popbox.setToolTip('Load here layer (as a point layer) with population in the area')
-        self.pop_grow.setToolTip('Enter here the percentage of annual growth of population')
-        self.consumption.setToolTip('Enter here the per capita consuption of water per day')
-        self.years_growth.setToolTip('Enter here the years used for considering population growth')
-        self.meshness_perc.setToolTip('Write down the amount of extra pipes you want for additional support of the system, as percentage of the skipped connections (streets)')
-        self.output_name.setToolTip('Select a location for the generated files')
-        
-        # Set up the user interface from Designer through FORM_CLASS.
-        # After self.setupUi() you can access any designer object by doing
-        # self.<objectname>, and you can use autoconnect slots - see
-        # http://qt-project.org/doc/qt-4.8/designer-using-a-ui-file.html
-        # #widgets-and-dialogs-with-auto-connect
-        
-        # for child in self.children():
-        #     print(child.objectName())
-        
-        
+
+        self.mixed_cb.setToolTip(self.tr(
+            'Select here to consider a combined sewer system instead of a separate system'))
+        self.buildbox.setToolTip(self.tr(
+            'Load here the layer with buildings in your study area'))
+        self.streetbox.setToolTip(self.tr(
+            'Load here the layer with the streets in your study area'))
+        self.catchbox.setToolTip(self.tr(
+            'Load here the layer with the study area or urban catchment'))
+        self.outletbox.setToolTip(self.tr(
+            'Load here the layer with the outlet for your sewer network'))
+        self.dembox.setToolTip(self.tr(
+            'Load here the layer with a digital elevation model'))
+        self.pipe_depth.setToolTip(self.tr(
+            'Select the minimum depth for your nodes according to local regulations'))
+        self.dist_thresh.setToolTip(self.tr(
+            'Enter here a distance threshold to consider for the generation of subcatchments'))
+        self.return_period.setToolTip(self.tr(
+            'Select the return period for sewer network design according to local regulations'))
+        self.build_min_sl.setToolTip(self.tr(
+            'Select a minimum slope for buildings for generation of subcatchments'))
+        self.build_max_slope.setToolTip(self.tr(
+            'Select a maximum slope for buildings for generation of subcatchments'))
+        self.r15_rain.setToolTip(self.tr(
+            'Enter here the relative rain intensity for design of 15 minutes with one year return period'))
+        self.st_min_slope.setToolTip(self.tr(
+            'Select a minimum slope for streets for generation of subcatchments'))
+        self.st_max_sl.setToolTip(self.tr(
+            'Select a maximum slope for streets for generation of subcatchments'))
+        self.tf_min.setToolTip(self.tr(
+            'Enter the minimum flow time for dimensioning with the rationale method'))
+        self.gw_cb.setToolTip(self.tr(
+            'Check to consider extraneous ground water infiltration (only works with combined systems)'))
+        self.consumption_perc.setToolTip(self.tr(
+            'Percentage of extraneous water as a fraction of dry weather flow'))
+        self.min_slope_pipe.setToolTip(self.tr(
+            'Select minimum slope for pipes in the network according to local regulations'))
+        self.popbox.setToolTip(self.tr(
+            'Load here layer (as a point layer) with population in the area'))
+        self.pop_grow.setToolTip(self.tr(
+            'Enter here the percentage of annual growth of population'))
+        self.consumption.setToolTip(self.tr(
+            'Enter here the per capita consumption of water per day'))
+        self.years_growth.setToolTip(self.tr(
+            'Enter here the years used for considering population growth'))
+        self.meshness_perc.setToolTip(self.tr(
+            'Write down the amount of extra pipes you want for additional support of the system, '
+            'as percentage of the skipped connections (streets)'))
+        self.output_name.setToolTip(self.tr(
+            'Select a location for the generated files'))
+
+    def tr(self, message):
+        """Translate using the OGFlushPlugin context."""
+        return QCoreApplication.translate('OGFlushPlugin', message)
+
     def checkbox_state_changed(self, state):
         # state == 2 means the checkbox is checked
         if state == 2:
-            # Disable the combobox and spinbox
             self.popbox.setEnabled(True)
             self.pop_grow.setEnabled(True)
             self.pb_pop.setEnabled(True)
             self.consumption.setEnabled(True)
             self.years_growth.setEnabled(True)
-            
         else:
-            # Enable the combobox and spinbox
-
             self.popbox.setEnabled(False)
             self.pop_grow.setEnabled(False)
             self.pb_pop.setEnabled(False)
             self.consumption.setEnabled(False)
             self.years_growth.setEnabled(False)
-            
+
     def checkbox_state_changed2(self, state):
         # state == 2 means the checkbox is checked
         if state == 2:

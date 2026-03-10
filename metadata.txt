@@ -5,12 +5,14 @@
 [general]
 name=OG.FLUSH
 qgisMinimumVersion=3.0
-description=This plugin creates a sewer network from geodata
-version=0.1
+description=This plugin designs a sewer network from open geodata (e.g. OSM) | Dieses Plugin entwirft ein Kanalnetz auf Basis offener Geodaten (z.B. OSM)
+version=0.2 dev
 author=Arbeitsgruppe Siedlungshydrologie, Institut für Siedlungs- und Industriewasserwirtschaft, Technische Universität Dresden
 email=diego.novoa_vazquez@tu-dresden.de
 
-about=This plugin designs a sewer system based on open-access geodata (e.g. OSM). The outputs can be used for hydrodynamic models like SWMM.
+about=EN: This plugin designs a sewer system based on open-access geodata (e.g. OSM). The outputs can be used for hydrodynamic models like SWMM.
+
+      DE: Dieses Plugin entwirft ein Kanalnetz auf Basis frei zugänglicher Geodaten (z.B. OSM). Die Ergebnisse können für hydrodynamische Modelle wie SWMM verwendet werden.
 
 tracker=https://github.com/sifatsiddik/OG.FLUSH/issues
 repository=https://github.com/sifatsiddik/OG.FLUSH
@@ -23,7 +25,7 @@ hasProcessingProvider=no
 # changelog=
 
 # Tags are comma separated with spaces allowed
-tags=sewer,drainage,stormwater,wastewater,routing,urban planning
+tags=sewer, drainage, stormwater, wastewater, routing, urban planning, Kanalisation, Entwässerung, Stadthydrologie
 
 homepage=https://github.com/sifatsiddik/OG.FLUSH/blob/main/README.md
 category=Plugins
@@ -39,9 +41,8 @@ deprecated=False
 # Check the documentation for more information.
 plugin_dependencies=networkx,numpy,pandas
 
-Category of the plugin: Raster, Vector, Database or Web
+# Category of the plugin: Raster, Vector, Database or Web
 # category=
 
 # If the plugin can run on QGIS Server.
 server=False
-
