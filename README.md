@@ -1,7 +1,10 @@
-# **OG.FLUSH**
+[English](#og_flush) | [Deutsch](#og_flush-de)
+
+---
+# **OG_FLUSH**
 
 ## Description
-**OG.FLUSH** (**O**pen-access **G**IS-based **F**low **L**ayout for **U**rban **S**ewer **H**ydrodynamics) is a QGIS plugin. It's developed for automatically generating a sewer system based on open-source geodata inputs, ideally the open-access source OpenStreetMaps. The outputs are then used to generate a hydrodynamic sewer system model like the Storm Water Management Model (SWMM).
+**OG_FLUSH** (**O**pen-access **G**IS-based **F**low **L**ayout for **U**rban **S**ewer **H**ydrodynamics) is a QGIS plugin. It's developed for automatically generating a sewer system based on open-source geodata inputs, ideally the open-access source OpenStreetMaps. The outputs are then used to generate a hydrodynamic sewer system model like the Storm Water Management Model (SWMM).
 
 The conceptual details and methodology can be found at https://www.mdpi.com/2073-4441/15/1/46.
 
@@ -91,6 +94,94 @@ QGIS' own Python Console can be used to install the libraries as well, if pip is
 
 <br>
 
+# OG_FLUSH (DE)
+Understood. Here is the full German version formatted for your README.md. I have kept the structure identical to your English version so they mirror each other perfectly on your GitHub page.
+
+Markdown
+# **OG_FLUSH**
+
+## Beschreibung
+**OG_FLUSH** (**O**pen-access **G**IS-based **F**low **L**ayout for **U**rban **S**ewer **H**ydrodynamics) ist ein QGIS-Plugin. Es wurde entwickelt, um automatisch Kanalnetzstrukturen auf Basis von Open-Source-Geodaten zu generieren – idealerweise aus der Open-Access-Quelle **OpenStreetMap**. Die Ergebnisse dienen als Grundlage für die Erstellung hydrodynamischer Kanalnetzmodelle, wie zum Beispiel für das **Storm Water Management Model (SWMM)**.
+
+Detaillierte Informationen zum Konzept und der Methodik finden Sie unter: https://www.mdpi.com/2073-4441/15/1/46.
+
+Dieses Tool wurde im Rahmen des Projekts **KlimaKonform** entwickelt. Weitere Informationen dazu finden Sie hier: https://klimakonform.uw.tu-dresden.de.
+
+⚠️ **Hinweis:** Dieses Plugin befindet sich noch in der Entwicklung (*Work in Progress*).
+
+<br>
+
+## Eingangsdaten (Inputs)
+Die folgenden Eingangsdaten sind für dieses Plugin erforderlich:
+
+| Parameter | Anforderung | Typ | Beschreibung | Quelle |
+| --- | --- | --- | --- | --- |
+| Untersuchungsgebiet | Erforderlich | ESRI Polygon Shapefile | Grenze des betrachteten Gebiets | Benutzerdefiniert |
+| Auslass (Outlet) | Erforderlich | ESRI Point Shapefile | Einzelner Endpunkt des Netzes (z. B. Kläranlage oder Einleitungsstelle) | Benutzerdefiniert |
+| Gebäude | Erforderlich | ESRI Polygon Shapefile | Gebäudegrundrisse innerhalb des Gebiets | Verschiedene (z. B. OSM, Google Open Buildings) |
+| Straßen | Erforderlich | ESRI LineString Shapefile | OSM-basiertes Straßennetz zur Ausrichtung der Kanalisation | OSM |
+| Digitales Geländemodell (DGM) | Erforderlich | Raster | Höhendaten des Geländes | Verschiedene (z. B. Stadtportale) |
+| Bevölkerungsdichte | Optional | ESRI Point Shapefile | Bevölkerungsverteilung für die Mischwasserplanung | Verschiedene (z. B. OSM) |
+
+<br>
+
+## Vorbereitung
+Bitte beachten Sie die folgenden Punkte bei der Vorbereitung der Eingabedateien:
+1. Stellen Sie sicher, dass alle Eingangsdaten in einem **UTM-Koordinatensystem** vorliegen.
+2. Stellen Sie sicher, dass die Daten für Gebäude, Straßen, Gelände und Bevölkerungsdichte das **gesamte Untersuchungsgebiet** abdecken. Dies kann durch einen Puffer (Buffer) um das Untersuchungsgebiet und anschließendes Ausschneiden der Daten sichergestellt werden.
+3. Stellen Sie sicher, dass alle Plugin-Abhängigkeiten in QGIS verfügbar sind. Weitere Informationen finden Sie im Abschnitt **Externe Abhängigkeiten**.
+
+<br>
+
+## Externe Abhängigkeiten
+OG.FLUSH benötigt die Python-Bibliotheken **NetworkX**, **NumPy** und **Pandas**. Diese sind nicht immer standardmäßig in jeder QGIS-Umgebung enthalten. Falls sie fehlen, müssen sie manuell installiert werden:
+
+**Installation über die OSGeo4W Shell (empfohlen bei offizieller Installation):**
+1. Suchen Sie im Windows-Startmenü nach "OSGeo4W Shell" und öffnen Sie diese.
+2. Prüfen Sie mit folgendem Befehl, ob `pip` installiert ist:
+   `python -m pip --version`
+3. Falls nicht vorhanden, installieren Sie `pip`:
+   `python -m ensurepip --upgrade`
+4. Installieren Sie die benötigten Bibliotheken:
+   `python -m pip install networkx numpy pandas`
+5. Die Konsole lädt fehlende Pakete herunter; bereits vorhandene werden übersprungen.
+6. Starten Sie QGIS nach Abschluss neu.
+
+**Alternative: Installation über die QGIS-Python-Konsole:**
+1. Gehen Sie in QGIS zu **Erweiterungen** → **Python-Konsole**.
+2. Geben Sie die folgenden Zeilen nacheinander ein und bestätigen Sie jeweils mit **Enter**:
+   ```python
+   import pip
+   pip install networkx numpy pandas
+3. Starten Sie QGIS anschließend neu.
+
+<br>
+
+## Anleitung
+1. **Plugin installieren:**
+   a. Gehen Sie zu **Erweiterungen** → **Verwalten und Installieren...**
+   b. Suchen Sie nach **OG.FLUSH**.
+   c. Klicken Sie auf **Plugin installieren**.
+2. Klicken Sie nach der Installation auf das Icon* in der Werkzeugleiste.
+   *\*Aktuell sieht es aus wie ein blaues Netzwerk. Wir hoffen, eines Tages einen professionellen Designer einstellen zu können.*
+3. Falls das Plugin nicht erscheint, aktivieren Sie es im Erweiterungs-Manager oder starten Sie QGIS neu.
+4. Wählen Sie die Shapefiles aus dem Dropdown-Menü aus. Falls sie bereits in QGIS geladen sind, erscheinen sie automatisch; ansonsten nutzen Sie den **…** Button.
+5. Wählen Sie die Bemessungsparameter gemäß lokaler Vorschriften. Weitere Infos erscheinen als Pop-up, wenn Sie mit der Maus über die Felder fahren (**Hover**).
+6. Für ein **Mischsystem** aktivieren Sie das entsprechende Kontrollkästchen und geben Sie die Daten ein.
+7. **Vernetzungsgrad (Meshness):** Wenn Sie zusätzliche Rohre (z. B. als Stauraum) hinzufügen möchten, geben Sie den Prozentsatz der im Hauptentwurf übersprungenen Verbindungen an.
+8. Wählen Sie einen Ausgabeordner.
+9. Klicken Sie auf den Button **"Run"**.
+10. Keine Sorge, falls QGIS für einige Minuten "einfriert" – das Programm arbeitet im Hintergrund. Der Fortschrittsbalken hält Sie auf dem Laufenden.
+
+<br>
+
+## Annahmen und Einschränkungen
+1. Alle Kanäle werden entlang (technisch gesehen: unter) den Straßen geplant.
+2. Zur Dimensionierung der Rohre wird das **Zeitbeiwertverfahren** (Rational Method) verwendet.
+3. Ein DGM mit geringer Auflösung (> 10 m) kann zu ungenaueren Netzentswürfen führen.
+4. Aktuell wird nur **OSM** für das Straßennetz unterstützt (**NICHT** für Gebäude oder andere Inputs). Andere Quellen sind für spätere Versionen geplant.
+5. Das Plugin arbeitet derzeit optimal mit **UTM-Koordinatensystemen**. Bei geografischen Koordinatensystemen kann es zu Fehlern bei der Validierung der Auslass-Distanz kommen. Eine Unterstützung dafür ist geplant.
+
 ## Authors
 Diego Novoa Vazquez  
 Julian David Reyes Silva  
@@ -104,14 +195,14 @@ TU Dresden
 
 <br>
 
-## Contact
+## Contact/Kontakt
 diego.novoa_vazquez@tu-dresden.de  
 md_sifat.siddik@tu-dresden.de  
 
 
 <br>
 
-## Important Links:
+## Important Links/Wichtige Links:
 **Article:** Reyes-Silva, J. D., Novoa, D., Helm, B., & Krebs, P. (2023). An Evaluation Framework for Urban Pluvial Flooding Based on Open-Access Data. Water, 15(1), 46. https://doi.org/10.3390/w15010046  
 **Sewer network meshness:** https://doi.org/10.2166/wst.2020.070  
 **OpenStreetMaps:** https://planet.openstreetmap.org  
