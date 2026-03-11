@@ -10,7 +10,6 @@ The conceptual details and methodology can be found at https://www.mdpi.com/2073
 
 This Tool was developed under the scope of the KlimaKonform project. Further information can be found here at https://klimakonform.uw.tu-dresden.de.
 
-⚠️ This plugin may be considered a work in progress.
 
 
 <br>
@@ -95,10 +94,6 @@ QGIS' own Python Console can be used to install the libraries as well, if pip is
 <br>
 
 # OG_FLUSH (DE)
-Understood. Here is the full German version formatted for your README.md. I have kept the structure identical to your English version so they mirror each other perfectly on your GitHub page.
-
-Markdown
-# **OG_FLUSH**
 
 ## Beschreibung
 **OG_FLUSH** (**O**pen-access **G**IS-based **F**low **L**ayout for **U**rban **S**ewer **H**ydrodynamics) ist ein QGIS-Plugin. Es wurde entwickelt, um automatisch Kanalnetzstrukturen auf Basis von Open-Source-Geodaten zu generieren – idealerweise aus der Open-Access-Quelle **OpenStreetMap**. Die Ergebnisse dienen als Grundlage für die Erstellung hydrodynamischer Kanalnetzmodelle, wie zum Beispiel für das **Storm Water Management Model (SWMM)**.
@@ -182,7 +177,7 @@ OG.FLUSH benötigt die Python-Bibliotheken **NetworkX**, **NumPy** und **Pandas*
 4. Aktuell wird nur **OSM** für das Straßennetz unterstützt (**NICHT** für Gebäude oder andere Inputs). Andere Quellen sind für spätere Versionen geplant.
 5. Das Plugin arbeitet derzeit optimal mit **UTM-Koordinatensystemen**. Bei geografischen Koordinatensystemen kann es zu Fehlern bei der Validierung der Auslass-Distanz kommen. Eine Unterstützung dafür ist geplant.
 
-## Authors
+## Authors/Autoren 
 Diego Novoa Vazquez  
 Julian David Reyes Silva  
 Md Sifat Siddik  
